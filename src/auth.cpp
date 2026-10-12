@@ -1,9 +1,12 @@
 #include "auth.h"
 
-using namespace std;
-
 User::User(string username, string password){
             this->username = username;
-            this->password_hash = password; //TODO implement PasswordHasher class and call function to hash the password + add salt 
+            this->salt = hasher.generate_salt(crypto_pwhash_SALTBYTES);
+            this->password_hash = hasher.hash_password(password, this->salt);
             this->id = 0;
+}
+
+void User::set_id(int id){
+    this->id = id;
 }

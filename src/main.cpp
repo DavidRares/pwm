@@ -6,10 +6,9 @@
 #include "database.h"
 #include "crypto.h"
 
-using namespace std;
-
-AuthService auth_service;
+AuthService auth;
 DatabaseService database;
+PasswordHasher hasher;
 
 class CLIService{
     public:
@@ -33,6 +32,7 @@ class CLIService{
 
 int main(const int argc, const char* argv[]){
     input_handler.validate_args(argc, argv);
-    
+
+    User new_user(argv[2],argv[3]);
     return 0;
 }

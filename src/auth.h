@@ -2,28 +2,30 @@
 #define AUTH_H
 
 #include <string>
+#include "crypto.h"
 
 #define UNALLOWED_CHARS "%%\\<>`´*"
+
 using namespace std;
 
 class User{
     public:
         User(string username, string password);
-        ~User() = default;
+        void set_id(int id);
     private:
         int id;
         string username;
         string password_hash;
+        vector<unsigned char> salt;
 };
 
 class Entry{
     public:
         Entry(string title, string password);
-        ~Entry() = default;
 
     private:
-
-        string title;
+        string domain;
+        string title_hash;
         string password_hash;
 
 };
