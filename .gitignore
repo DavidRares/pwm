@@ -2,3 +2,4 @@ pwm
 pwm.db
 *.plist
 *.yml
+.DS_Store

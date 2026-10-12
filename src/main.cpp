@@ -9,6 +9,7 @@
 AuthService auth;
 DatabaseService database;
 PasswordHasher hasher;
+UsersDatabase users_table;
 
 class CLIService{
     public:
