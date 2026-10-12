@@ -1,2 +1,4 @@
 pwm
 pwm.db
+*.plist
+*.yml

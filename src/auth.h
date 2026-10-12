@@ -30,8 +30,6 @@ class Entry{
 
 class AuthService{
     public:
-        AuthService() = default;
-        ~AuthService() = default;
         //User register_user(const string& username, const string& password);
         //User login_user(const string& username, const string& password);
         //void change_password(const string& new_password);
