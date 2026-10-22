@@ -1,7 +1,7 @@
 CXX = g++
 SRC = src/*.cpp
 TARGET = pwm
-CXXFLAGS = -Wall -Wextra -g
+CXXFLAGS = -std=c++17 -Wall -Wextra -g
 
 LIBSODIUM_IPATH = /opt/homebrew/opt/libsodium/include
 LIBSODIUM_LPATH = /opt/homebrew/opt/libsodium/lib

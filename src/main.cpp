@@ -2,38 +2,40 @@
 #include <exception>
 #include <cstring>
 
-#include "auth.h"
-#include "database.h"
-#include "crypto.h"
+#include "cli.h"
 
-AuthService auth;
 DatabaseService database;
+UsersDatabase user_table(database);
+AuthService auth(user_table);
 PasswordHasher hasher;
-UsersDatabase users_table;
-
-class CLIService{
-    public:
-        void validate_args(const int argc, const char* argv[]){
-            try{
-                if(argc != 4)
-                    throw runtime_error("Not enough arguments!");
-
-                if (strcmp(argv[1], "register") != 0 && strcmp(argv[1], "login") != 0)
-                    throw runtime_error("You can either register or login.");
-
-                if (strpbrk(argv[2], UNALLOWED_CHARS) != NULL)
-                    throw runtime_error("Username contains unallowed characters.");
-            }
-            catch(const runtime_error& e){
-                cout <<"Error: "<< e.what() << endl;
-            }
-        }
-        void handle_command(){}
-}input_handler;
+CLIService input_handler;
 
 int main(const int argc, const char* argv[]){
-    input_handler.validate_args(argc, argv);
+    User user("username", "password");
 
-    User new_user(argv[2],argv[3]);
+    try{
+        input_handler.validate_args(argc, argv);
+
+        User new_user(argv[2],argv[3]);
+        
+        input_handler.handle_doorway(argv[1], new_user);
+        user = new_user;
+    }
+    catch(const runtime_error& e){
+        cout <<"Error: "<< e.what() << endl;
+        return 0;
+    }
+
+    string command;
+    const string input_prompt = user.get_username() + " $ ";
+
+    cout << input_prompt;
+    while (getline(cin, command)){
+        if (command == "exit")
+            break;
+        
+        cout << input_prompt;
+    }
+    
     return 0;
 }
