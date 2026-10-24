@@ -21,3 +21,34 @@ void CLIService::handle_doorway(const string command, User& user){
     else 
         throw runtime_error("Invalid command.");
 }
+
+unique_ptr<Command> CLIService::handle_command(const string input_str){
+    stringstream ss(input_str);
+    vector<string> argv;
+
+    string word;
+    while (ss >> word) 
+        argv.push_back(word);
+
+    if (argv.empty())
+        return nullptr;
+
+    unique_ptr<Command> ret = nullptr;
+
+    //if(argv.at(0) == "add")
+    //    ret = make_unique<addEntry>();
+    // else if(argv.at(0) == "delete")
+    //     ret = make_unique<deleteEntry>();
+    // else if(argv.at(0) == "update")
+    //     ret = make_unique<updateEntry>();
+    // else if(argv.at(0) == "get")
+    //     ret = make_unique<getEntry>();
+    // else if(argv.at(0) == "changepwd")
+    //     ret = make_unique<changePassword>();
+    //else {
+    //    throw runtime_error("Invalid command."); 
+    //    return nullptr;
+    //}
+
+    return ret;
+}

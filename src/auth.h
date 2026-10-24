@@ -31,18 +31,6 @@ class User{
         vector<unsigned char> salt;
 };
 
-class Entry{
-    public:
-        Entry(int user_id ,string domain, string title, string password);
-
-    private:
-        int user_id;
-        string domain;
-        string title_hash;
-        string password_hash;
-
-};
-
 class AuthService{
     public:
         AuthService(UsersDatabase& user_table): user_table(user_table){};
