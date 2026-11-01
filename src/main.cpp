@@ -6,22 +6,24 @@
 
 DatabaseService database;
 UsersDatabase user_table(database);
+VaultDatabase vault_table(database);
 AuthService auth(user_table);
 PasswordHasher hasher;
-CLIService input_handler;
+CLIService cli;
 
 int main(const int argc, const char* argv[]){
     User user("username", "password");
 
     try{
-        input_handler.validate_args(argc, argv);
+        cli.validate_args(argc, argv);
 
         User new_user(argv[2],argv[3]);
         
-        input_handler.handle_doorway(argv[1], new_user);
+        cli.handle_doorway(argv[1], new_user);
         user = new_user;
+
     }
-    catch(const runtime_error& e){
+    catch(const invalid_argument& e){
         cout <<"Error: "<< e.what() << endl;
         return 0;
     }
@@ -33,6 +35,13 @@ int main(const int argc, const char* argv[]){
     while (getline(cin, command)){
         if (command == "exit")
             break;
+            
+        try{
+            cli.handle_command(command, user);
+        }
+        catch (const invalid_argument& e){
+            cout << "Error: " << e.what() << endl;
+        }
         
         cout << input_prompt;
     }

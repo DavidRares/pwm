@@ -1,5 +1,7 @@
 #ifndef CLI
 #define CLI
+#ifndef CLI_H
+#define CLI_H
 
 #include "auth.h"
 #include <sstream>

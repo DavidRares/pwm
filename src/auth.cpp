@@ -1,19 +1,11 @@
 #include "auth.h"
 
-User::User(string username, string password){
-            this->username = username;
-            this->salt = hasher.generate_salt(crypto_pwhash_SALTBYTES);
-            this->password_hash = hasher.hash_password(password, this->salt);
-            this->password = password;
-            this->id = 0;
+User::User(string username, string password) : username(username),password(password),id(0){
+            this->auth_salt = hasher.generate_salt(crypto_pwhash_SALTBYTES);
+            this->password_hash = hasher.hash_password(password, this->auth_salt);
 }
 
-User::User(string username, string password_hash, vector<unsigned char> salt, int id){
-    this->username = username;
-    this->password_hash = password_hash;
-    this -> id = id;
-    this->salt = salt;
-}
+User::User(string username, string password_hash, vector<unsigned char> auth_salt, int id) : username(username), password_hash(password_hash), id(id), auth_salt(auth_salt){}
 
 void User::set_id(int id){
     this->id = id;
@@ -35,8 +27,8 @@ const string User::get_password(){
     return this->password;
 }
 
-const vector<unsigned char> User::get_salt(){
-    return this->salt;
+const vector<unsigned char> User::get_auth_salt(){
+    return this->auth_salt;
 }
 
 void AuthService::register_user(User& user){
@@ -52,7 +44,7 @@ void AuthService::login_user(User& user){
     if(!existing_user)
         throw runtime_error("Invalid credentials.");
 
-    const string user_password_hash = hasher.hash_password(user.get_password(), existing_user->get_salt());
+    const string user_password_hash = hasher.hash_password(user.get_password(), existing_user->get_auth_salt());
 
     if(existing_user->get_password_hash() != user_password_hash)
         throw runtime_error("Invalid credentials.");

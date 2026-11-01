@@ -11,9 +11,9 @@
 using namespace std;
 
 class PasswordHasher{
-    public:
-        PasswordHasher();
-        const string hash_password(const string& plaintext, vector<unsigned char> salt);
-        vector<unsigned char> generate_salt(const size_t size);
+public:
+    PasswordHasher();
+    const string hash_password(const string& plaintext, vector<unsigned char> salt);
+    vector<unsigned char> generate_salt(const size_t size);
 }extern hasher;
 #endif
