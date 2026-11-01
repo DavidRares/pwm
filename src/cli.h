@@ -1,5 +1,3 @@
-#ifndef CLI
-#define CLI
 #ifndef CLI_H
 #define CLI_H
 
@@ -10,67 +8,49 @@
 using namespace std;
 
 class Command{
-    public:
-        Command();
-        virtual ~Command();
-        virtual void exec() = 0;
-    private:
-        User* user;
+public:
+    Command(vector<string> argv, User& user);
+    virtual void exec() = 0;
+
+private:
+    vector<string> argv;
+    User* user;
 };
 
 class addEntry : public Command{
-    public:
-        addEntry();
-        ~addEntry() override;
-        void exec() override;
-    private:
-        string domain;
-        string title_hash;
-        string password_hash;
+public:
+    using Command::Command;
+    void exec() override;
 };
 
 class deleteEntry : public Command{
-    public:
-        deleteEntry();
-        ~deleteEntry() override;
-        void exec() override;
-    private:
-        string domain;
-        int index;
+public:
+    using Command::Command;
+    void exec() override;
 };
 
 class updateEntry : public Command{
-    public:
-        updateEntry();
-        ~updateEntry() override;
-        void exec() override;
-    private:
-        string domain;
-        string title_hash;
-        string password_hash;
-        int index;
+public:
+    using Command::Command;
+    void exec() override;
 };
 
 class getEntry : public Command{
-    public:
-        getEntry();
-        ~getEntry() override;
-        void exec() override;
-    private:
-        string domain;
+public:
+    using Command::Command;
+    void exec() override;
 };
 
 class changePassword : public Command{
-    public:
-        changePassword();
-        ~changePassword() override;
-        void exec() override;
+public:
+    using Command::Command;
+    void exec() override;
 };
 
 class CLIService{
-    public:
-        void validate_args(const int argc, const char* argv[]);
-        void handle_doorway(const string command, User& user);
-        unique_ptr<Command> handle_command(const string input_str);
+public:
+    void validate_args(const int argc, const char* argv[]);
+    void handle_doorway(const string command, User& user);
+    unique_ptr<Command> handle_command(const string& input_str, User& user);
 }extern input_handler;
 #endif
