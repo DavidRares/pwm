@@ -15,5 +15,11 @@ public:
     PasswordHasher();
     const string hash_password(const string& plaintext, vector<unsigned char> salt);
     vector<unsigned char> generate_salt(const size_t size);
+
+    vector<unsigned char> generate_nonce(const size_t size);
+    vector<unsigned char> encrypt_password(const string& plaintext, const vector<unsigned char>& nonce, const vector<unsigned char>& key);
+    string decrypt_password(const vector<unsigned char>& ciphertext, const vector<unsigned char>& nonce, const vector<unsigned char>& key);
 }extern hasher;
+
+//add vaultHasher interface
 #endif
