@@ -21,7 +21,6 @@ int main(const int argc, const char* argv[]){
         
         cli.handle_doorway(argv[1], new_user);
         user = new_user;
-
     }
     catch(const invalid_argument& e){
         cout <<"Error: "<< e.what() << endl;

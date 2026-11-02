@@ -20,7 +20,6 @@ const string PasswordHasher::hash_password(const string& plaintext, vector<unsig
     }
 
     char hex_hash[HASH_BYTES];
-
     sodium_bin2hex(hex_hash, sizeof(hex_hash), hash, sizeof(hash));
 
     sodium_memzero(hash, sizeof(hash));
@@ -32,7 +31,6 @@ vector<unsigned char> PasswordHasher::generate_nonce(const size_t size) {
         throw invalid_argument("Invalid nonce size");
 
     vector<unsigned char> nonce(size);
-
     randombytes_buf(nonce.data(), nonce.size());
 
     return nonce;

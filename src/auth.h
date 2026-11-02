@@ -16,12 +16,13 @@ class UsersDatabase;
 class User{
 public:
     User(string username, string password);
-    User(string username, string password_hash, vector<unsigned char> salt, int id);
+    User(string username, string password_hash, vector<unsigned char> auth_salt, vector<unsigned char> key_nonce, int id);
     void set_id(int id);
     int get_id();
     const string get_username();
     const string get_password_hash();
     const vector<unsigned char> get_auth_salt();
+    const vector<unsigned char> get_key_nonce();
     const string get_password();
 
 private:
@@ -30,6 +31,8 @@ private:
     string password_hash;
     string password;
     vector<unsigned char> auth_salt;
+    vector<unsigned char> key_nonce;
+    
 };
 
 class AuthService{

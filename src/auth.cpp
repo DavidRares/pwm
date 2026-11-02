@@ -3,9 +3,10 @@
 User::User(string username, string password) : username(username),password(password),id(0){
             this->auth_salt = hasher.generate_salt(crypto_pwhash_SALTBYTES);
             this->password_hash = hasher.hash_password(password, this->auth_salt);
+            this->key_nonce = hasher.generate_nonce(crypto_aead_xchacha20poly1305_ietf_NPUBBYTES);
 }
 
-User::User(string username, string password_hash, vector<unsigned char> auth_salt, int id) : username(username), password_hash(password_hash), id(id), auth_salt(auth_salt){}
+User::User(string username, string password_hash, vector<unsigned char> auth_salt, vector<unsigned char> key_nonce, int id) : username(username), password_hash(password_hash), id(id), auth_salt(auth_salt), key_nonce(key_nonce){}
 
 void User::set_id(int id){
     this->id = id;
@@ -29,6 +30,10 @@ const string User::get_password(){
 
 const vector<unsigned char> User::get_auth_salt(){
     return this->auth_salt;
+}
+
+const vector<unsigned char> User::get_key_nonce(){
+    return this->key_nonce;
 }
 
 void AuthService::register_user(User& user){
